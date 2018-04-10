@@ -1,0 +1,11 @@
+TASQUE_ROOT = Rails.root
+
+Tasque.configure do |config|
+  config.logger = Rails.logger
+  
+  # Which database from database.yml we use
+  config.environment = Rails.env
+    
+  # This option need only if you want to receive tasks
+  # config.worker = 'example'
+end
