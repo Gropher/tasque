@@ -12,37 +12,31 @@ module Tasque
     serialize :result
     
     scope :with_task, ->(task) { where(task: task).order priority: :desc }
-    scope :minimum_priority, ->(pr) { priority.nil? ? nil : where('priority >= ?', priority) }
-    scope :to_process, -> { where state: %w(new reprocessed) }
-    scope :with_error, -> { where state: 'error' }
+    scope :minimum_priority, ->(priority) { priority.nil? ? nil : where('priority >= ?', priority) }
+    scope :to_process, -> { where status: %w(new reprocessed) }
+    scope :with_error, -> { where status: 'error' }
     scope :to_reprocess, -> { with_error.where 'attempts < ?', MAX_ATTEMPTS }
     scope :finished_in, ->(interval) { where('finished_at > ?', interval.ago) }
     
     validates :task, presence: true
     validates :attempts, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    validates :progress, numericality: { greater_than_or_equal_to: 0, greater_than_or_equal_to: 100 }
+    validates :progress, numericality: { only_integer: true, greater_than_or_equal_to: 0, greater_than_or_equal_to: 100 }
+    validates :priority, numericality: { only_integer: true }
     
     class << self
       def fetch(task, &block)
         task = nil
-      
         transaction do
           minimum_priority = Tasque.config.minimum_priority
-          
           task = self.with_task(task).to_process.minimum_priority(minimum_priority).lock(true).first
-        
-          unless task.nil?
-            if task.can_pickup?
-              task.pickup
-            else
-              task = nil
-            end
+          if task and task.can_pickup?
+            task.pickup
+          else
+            task = nil
           end
         end
-
-        yield(task) unless task.nil?
-        
-        return !task.nil?
+        yield(task) if task
+        !!task
       end
     
       def monitoring
@@ -59,7 +53,7 @@ module Tasque
       end
     end
     
-    state_machine :initial => :new do
+    state_machine :status, initial: :new do
       after_transition on: :pickup do |task|
         task.update_column :worker, Tasque.config.worker
       end

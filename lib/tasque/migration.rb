@@ -9,9 +9,9 @@ module Tasque
           t.text :result
           t.string :worker
           t.integer :priority, :default => 0
-          t.integer :attempt, :default => 0
+          t.integer :attempts, :default => 0
           t.integer :progress, :default => 0
-          t.string :state
+          t.string :status
       
           t.datetime :started_at
           t.datetime :finished_at
@@ -19,12 +19,13 @@ module Tasque
           t.timestamps
         end
     
-        add_index :tasque_tasks, [:state, :task]
-        add_index :tasque_tasks, :state
+        add_index :tasque_tasks, [:status, :task]
+        add_index :tasque_tasks, :status
         add_index :tasque_tasks, :tag     
         add_index :tasque_tasks, :task
         add_index :tasque_tasks, :worker
         add_index :tasque_tasks, :priority
+        add_index :tasque_tasks, :attempts
       END_OF_CODE
     end
     
