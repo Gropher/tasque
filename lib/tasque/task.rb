@@ -8,8 +8,8 @@ module Tasque
     
     self.table_name = :tasque_tasks
     
-    serialize :params
-    serialize :result
+    serialize :params, JSON
+    serialize :result, JSON
     
     scope :with_task, ->(task) { where(task: task).order priority: :desc }
     scope :minimum_priority, ->(priority) { priority.nil? ? nil : where('priority >= ?', priority) }
