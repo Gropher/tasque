@@ -1,6 +1,5 @@
 require 'rails/generators'
 require 'rails/generators/migration'
-require 'tasque/migration'
 
 module Tasque
   class InstallGenerator < ::Rails::Generators::Base
