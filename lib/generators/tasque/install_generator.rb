@@ -1,8 +1,9 @@
+require 'rails/generators'
 require 'rails/generators/migration'
 require 'tasque/migration'
 
 module Tasque
-  module Generators
+  #module Generators
     class InstallGenerator < ::Rails::Generators::Base
       include Rails::Generators::Migration
       
@@ -23,5 +24,5 @@ module Tasque
         migration_template "create_tasque_tasks.erb", "db/migrate/create_tasque_tasks.rb"
       end
     end
-  end
+  #end
 end
