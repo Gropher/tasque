@@ -1,7 +1,7 @@
 module Tasque
   class Migration < ActiveRecord::Migration[4.2]
     def self.code
-      #<<-END_OF_CODE
+      <<-END_OF_CODE
         create_table :tasque_tasks do |t|
           t.string :tag
           t.string :task
@@ -26,7 +26,7 @@ module Tasque
         add_index :tasque_tasks, :worker
         add_index :tasque_tasks, :priority
         add_index :tasque_tasks, :attempts
-      #END_OF_CODE
+      END_OF_CODE
     end
     
     def change

@@ -20,7 +20,7 @@ module Tasque
     end
   end
   
-  def self.database_connection(check_table = false)
+  def self.database_connection()
     raise 'No configuration. Use Tasque.configure' if self.config.nil?
     @database ||= begin
       if !defined?(Rails) && !ActiveRecord::Base.connected?
@@ -30,7 +30,6 @@ module Tasque
         ActiveRecord::Base.establish_connection(db)
         ActiveRecord::Base.connection
       end
-      raise 'No tasks table. Use Tasque.migrate!' if check_table && !Tasque::Task.table_exists?
       ActiveRecord::Base
     end
   end
