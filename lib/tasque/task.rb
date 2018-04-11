@@ -20,7 +20,7 @@ module Tasque
     
     validates :task, presence: true
     validates :attempts, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-    validates :progress, numericality: { only_integer: true, greater_than_or_equal_to: 0, greater_than_or_equal_to: 100 }
+    validates :progress, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }
     validates :priority, numericality: { only_integer: true }
     
     class << self
