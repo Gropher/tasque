@@ -8,4 +8,13 @@ Tasque.configure do |config|
     
   # This option need only if you want to receive tasks
   # config.worker = 'example'
+ 
+  # How often should processor check for a new tasks
+  # config.check_interval = 10 # seconds
+ 
+  # How often should task progress be reported
+  # config.progress_interval = 5 # seconds
+  
+  # This option tells processor to fetch only tasks with priority value greater than or equal to minimum_priority
+  # config.minimum_priority = 123
 end

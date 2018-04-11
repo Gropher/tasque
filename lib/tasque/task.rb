@@ -24,11 +24,11 @@ module Tasque
     validates :priority, numericality: { only_integer: true }
     
     class << self
-      def fetch(task, &block)
+      def fetch(type, &block)
         task = nil
         transaction do
           minimum_priority = Tasque.config.minimum_priority
-          task = self.with_task(task).to_process.minimum_priority(minimum_priority).lock(true).first
+          task = self.with_task(type).to_process.minimum_priority(minimum_priority).lock(true).first
           if task and task.can_pickup?
             task.pickup
           else
