@@ -20,7 +20,7 @@ module Tasque
     end
   end
   
-  def self.database_connection(check_table = true)
+  def self.database_connection(check_table = false)
     raise 'No configuration. Use Tasque.configure' if self.config.nil?
     @database ||= begin
       if !defined?(Rails) && !ActiveRecord::Base.connected?
