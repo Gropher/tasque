@@ -17,7 +17,7 @@ Or install it manually:
 
     $ gem install tasque
 
-At first you need to generate initializer and migration:
+Then you need to generate initializer and migration:
 
     $ rails g tasque:install
 
