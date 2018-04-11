@@ -42,7 +42,7 @@ module Tasque
       def monitoring
         {
           queue: Tasque::Task.to_process.count,
-          errors: Tasque::Task.with_error.ends_in(1.hour).count
+          errors: Tasque::Task.with_error.finished_in(1.hour).count
         }
       end
       
@@ -63,11 +63,11 @@ module Tasque
       end
       
       after_transition on: :complete do |task|
-        task.update_columns progress: 100, processed_at: Time.now
+        task.update_columns progress: 100, finished_at: Time.now
       end
       
       after_transition on: :failure do |task|
-        task.update_columns attempts: (task.attempts + 1), result: { error: task.error }, progress: 0.0
+        task.update_columns attempts: (task.attempts + 1), result: { error: task.error }, progress: 0
       end
       
       after_transition on: :reprocess do |task|
