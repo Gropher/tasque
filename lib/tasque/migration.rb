@@ -1,5 +1,5 @@
 module Tasque
-  class Migration < ActiveRecord::Migration
+  class Migration < ActiveRecord::Migration[4.2]
     def self.code
       <<-END_OF_CODE
         create_table :tasque_tasks do |t|
