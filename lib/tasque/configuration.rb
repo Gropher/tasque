@@ -12,14 +12,6 @@ module Tasque
     return self.config
   end
   
-  def self.migrate!(direction = :up)
-    self.database_connection(false)
-    if !Tasque::Task.table_exists? || direction == :down
-      require 'tasque/migration'
-      Tasque::Migration.migrate(direction)
-    end
-  end
-  
   def self.database_connection()
     raise 'No configuration. Use Tasque.configure' if self.config.nil?
     @database ||= begin

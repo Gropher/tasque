@@ -20,7 +20,7 @@ module Tasque
 
     def create_initializer
       template 'tasque.erb', 'config/initializers/tasque.rb'
-      migration_template "create_tasque_tasks.erb", "db/migrate/create_tasque_tasks.rb", migration_version: '[4.2]'
+      migration_template "create_tasque_tasks.erb", "db/migrate/create_tasque_tasks.rb"
     end
   end
 end
