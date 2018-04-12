@@ -129,7 +129,7 @@ module Tasque
     
   private
     def notify      
-      if Tasque.configuration.notify && defined?(Insque)
+      if Tasque.config.notify && defined?(Insque)
         Insque.broadcast :task_update, self
       end
     rescue Exception => e

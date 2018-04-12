@@ -52,12 +52,12 @@ module Tasque
       }
       trap("SIGINT", shutdown)
       trap("SIGTERM", shutdown)
-      if Tasque.configuration.heartbeat && defined?(Insque)
+      if Tasque.config.heartbeat && defined?(Insque)
         heartbeat_thread = Thread.new do
           heartbeat_timers = Timers::Group.new
-          heartbeat_timers.every(Tasque.configuration.heartbeat_interval) do
+          heartbeat_timers.every(Tasque.config.heartbeat_interval) do
             message = {
-              worker: Tasque.configuration.worker,
+              worker: Tasque.config.worker,
               busy: !@current_job.nil?
             }
             Insque.broadcast :heartbeat, message
