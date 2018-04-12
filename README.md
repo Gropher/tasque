@@ -48,6 +48,7 @@ Now to process the task:
     # register a handler for test tasks
     processor.add_handler('test') do |task|
       puts "Got task ##{task.id}. Task says: '#{task.params['text']}'"
+      { log: 'got task, printed text' } # returning task result
     end
 
     # start processor and wait
