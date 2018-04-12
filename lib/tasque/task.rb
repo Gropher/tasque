@@ -129,6 +129,9 @@ module Tasque
     
   private
     def notify      
+      if Tasque.configuration.notify && defined?(Insque)
+        Insque.broadcast :task_update, self
+      end
     rescue Exception => e
       logger.error "Notify error: #{e.message}"
     end

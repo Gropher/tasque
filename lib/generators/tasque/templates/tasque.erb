@@ -17,4 +17,11 @@ Tasque.configure do |config|
   
   # This option tells processor to fetch only tasks with priority value greater than or equal to minimum_priority
   # config.minimum_priority = 123
+
+  # Send task state updates and progress notifications via Insque
+  # config.notify = true
+
+  # Send worker heartbeat via Insque
+  # config.heartbeat = true
+  # config.heartbeat_interval = 30 # seconds
 end

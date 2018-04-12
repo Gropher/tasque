@@ -39,13 +39,19 @@ module Tasque
     attr_accessor :progress_interval
     attr_accessor :minimum_priority
     attr_accessor :worker
+    attr_accessor :heartbeat
+    attr_accessor :heartbeat_interval
+    attr_accessor :notify
 
     def initialize
       self.environment = :development
       self.database_file = ::File.expand_path('config/database.yml', Tasque.root)
-      self.check_interval = 10 # 10 seconds by default
+      self.check_interval = 10 # seconds
       self.worker = "default"
-      self.progress_interval = 5
+      self.progress_interval = 5 # seconds
+      self.heartbeat = false
+      self.heartbeat_interval = 10 # seconds
+      self.notify = false
     end
     
     def database_file=(path)
