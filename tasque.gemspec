@@ -21,4 +21,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency("timers")
   gem.add_dependency("state_machine")
   gem.add_dependency("json")
+  gem.add_development_dependency('rspec')
+  gem.add_development_dependency('activesupport')
+  gem.add_development_dependency('sqlite3')
+  gem.add_development_dependency('insque')
 end
