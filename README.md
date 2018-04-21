@@ -55,6 +55,20 @@ Now to process the task:
     # start processor and wait
     processor.start
     
+    
+### Using with Insque
+
+Tasque can send task and worker state updates via [Insque](https://github.com/Gropher/insque). 
+
+To enable this featute uncomment following lines in your tasque initializer: 
+
+    # Send task state updates and progress notifications via Insque
+    config.notify = true
+
+    # Send worker heartbeat via Insque
+    config.heartbeat = true
+    config.heartbeat_interval = 10 # seconds
+    
 
 ## Contributing
 
