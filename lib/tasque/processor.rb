@@ -35,6 +35,8 @@ module Tasque
           has_task = Tasque::Task.fetch(type) do |task|
             @handlers[type.to_sym].call(task)
           end
+        rescue ActiveRecord::Deadlocked
+          retry
         end while has_task
       end
     end
