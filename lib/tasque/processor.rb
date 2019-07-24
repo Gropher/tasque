@@ -61,7 +61,7 @@ module Tasque
             message = {
               worker: Tasque.config.worker,
               busy: !@current_job.nil?
-            }
+            }.merge(Tasque.config.heartbeat_payload)
             Insque.broadcast :heartbeat, message
           end
           loop do

@@ -41,6 +41,7 @@ module Tasque
     attr_accessor :worker
     attr_accessor :heartbeat
     attr_accessor :heartbeat_interval
+    attr_accessor :heartbeat_payload
     attr_accessor :notify
 
     def initialize
@@ -51,6 +52,7 @@ module Tasque
       self.progress_interval = 5 # seconds
       self.heartbeat = false
       self.heartbeat_interval = 10 # seconds
+      self.heartbeat_payload = {}
       self.notify = false
     end
     
