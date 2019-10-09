@@ -11,7 +11,7 @@ module Tasque
     serialize :params, JSON
     serialize :result, JSON
     
-    scope :with_task, ->(task) { where(task: task).order priority: :desc }
+    scope :with_task, ->(task) { where(task: task).order priority: :desc, created_at: :asc }
     scope :minimum_priority, ->(priority) { priority.nil? ? nil : where('priority >= ?', priority) }
     scope :to_process, -> { where status: %w(new reprocessed) }
     scope :with_error, -> { where status: 'error' }
