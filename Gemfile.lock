@@ -30,7 +30,7 @@ GEM
     insque (0.6.3)
       json (> 2)
       redis (> 2)
-    json (2.1.0)
+    json (2.3.1)
     minitest (5.11.3)
     redis (4.0.1)
     rspec (3.7.0)
