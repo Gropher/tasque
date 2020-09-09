@@ -17,17 +17,21 @@ module Tasque
         task.process
         begin
           task.result = block.call task
+          task.complete
+        rescue Tasque::TaskCancel => e
+          task.cancel
         rescue Tasque::TaskError => e
           task.error = {
             task_error: e.task_error
           }
+          task.failure
         rescue Exception => e
           task.error = {
             exception: e.message,
             backtrace: e.backtrace
           }
+          task.failure
         end
-        task.error? ? task.failure : task.complete
         @current_task = nil
       end
       @timers.every(check_interval) do

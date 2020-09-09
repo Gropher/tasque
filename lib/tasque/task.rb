@@ -98,7 +98,7 @@ module Tasque
       end
       
       event :cancel do
-        transition any - [:processing] => :canceled
+        transition any => :canceled
       end
       
       
