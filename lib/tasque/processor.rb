@@ -21,12 +21,12 @@ module Tasque
         rescue Tasque::TaskCancel => e
           task.cancel
         rescue Tasque::TaskError => e
-          task.error = {
+          task.result = {
             task_error: e.task_error
           }
           task.failure
         rescue Exception => e
-          task.error = {
+          task.result = {
             exception: e.message,
             backtrace: e.backtrace
           }
@@ -64,7 +64,8 @@ module Tasque
           heartbeat_timers.every(Tasque.config.heartbeat_interval) do
             message = {
               worker: Tasque.config.worker,
-              busy: !@current_job.nil?
+              busy: !@current_task.nil?,
+              current_task: @current_task.try(:id)
             }.merge(Tasque.config.heartbeat_payload)
             Insque.broadcast :heartbeat, message
           end

@@ -24,15 +24,24 @@ module Tasque
     validates :priority, numericality: { only_integer: true }
     
     class << self
+      def do_fetch(type)
+        minimum_priority = Tasque.config.minimum_priority
+        task = self.with_task(type).to_process.minimum_priority(minimum_priority).lock(true).first
+        if task and task.can_pickup?
+          task.pickup
+          task
+        end
+      end
+
       def fetch(type, &block)
         task = nil
-        transaction do
-          minimum_priority = Tasque.config.minimum_priority
-          task = self.with_task(type).to_process.minimum_priority(minimum_priority).lock(true).first
-          if task and task.can_pickup?
-            task.pickup
-          else
-            task = nil
+        if Tasque.config.heartbeat && defined?(RedisMutex)
+          RedisMutex.with_lock(Tasque.config.mutex_name, Tasque.config.mutex_options) do
+            task = do_fetch(type)
+          end
+        else
+          transaction do
+            task = do_fetch(type)
           end
         end
         yield(task) if task
@@ -94,7 +103,7 @@ module Tasque
       end
       
       event :reprocess do
-        transition [:processing, :complete, :error] => :reprocessed
+        transition [:processing, :complete, :error, :canceled] => :reprocessed
       end
       
       event :cancel do

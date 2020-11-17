@@ -68,6 +68,9 @@ To enable this featute uncomment following lines in your tasque initializer:
     # Send worker heartbeat via Insque
     config.heartbeat = true
     config.heartbeat_interval = 10 # seconds
+
+    # Use RedisMutex instead of database transaction 
+    config.use_mutex = true
     
 
 ## Contributing

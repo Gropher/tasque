@@ -43,6 +43,9 @@ module Tasque
     attr_accessor :heartbeat_interval
     attr_accessor :heartbeat_payload
     attr_accessor :notify
+    attr_accessor :use_mutex
+    attr_accessor :mutex_name
+    attr_accessor :mutex_options
 
     def initialize
       self.environment = :development
@@ -54,6 +57,9 @@ module Tasque
       self.heartbeat_interval = 10 # seconds
       self.heartbeat_payload = {}
       self.notify = false
+      self.use_mutex = false
+      self.mutex_name = 'tasque_task_pickup'
+      self.mutex_options = {}
     end
     
     def database_file=(path)
