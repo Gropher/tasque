@@ -35,7 +35,7 @@ module Tasque
 
       def fetch(type, &block)
         task = nil
-        if Tasque.config.heartbeat && defined?(RedisMutex)
+        if Tasque.config.use_mutex && defined?(RedisMutex)
           RedisMutex.with_lock(Tasque.config.mutex_name, Tasque.config.mutex_options) do
             task = do_fetch(type)
           end
