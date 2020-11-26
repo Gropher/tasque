@@ -76,7 +76,7 @@ module Tasque
       end
       
       after_transition on: :failure do |task|
-        task.update_columns attempts: (task.attempts + 1), result: { error: task.error }, progress: 0
+        task.update_columns attempts: (task.attempts + 1), progress: 0
       end
       
       after_transition on: :reprocess do |task|
