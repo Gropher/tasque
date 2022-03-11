@@ -39,7 +39,7 @@ module Tasque
           has_task = Tasque::Task.fetch(type) do |task|
             @handlers[type.to_sym].call(task)
           end
-        rescue ActiveRecord::Deadlocked, ActiveRecord::LockWaitTimeout
+        rescue ActiveRecord::Deadlocked, ActiveRecord::LockWaitTimeout, RedisMutex::LockError
           retry
         end while has_task
       end
